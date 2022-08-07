@@ -32,5 +32,12 @@ function onGalleryContainerClick(event) {
   if (!event.target.classList.contains("gallery__image")) {
     return;
   }
-  console.log(event.target.dataset.source);
+  // console.log(event.target.dataset.source);
+  const parentGalleryItem = event.target.closest(".gallery__item");
+  console.log(parentGalleryItem);
+  const activeGalleryItem = document.querySelector(".gallery__item.is-active");
+  if (activeGalleryItem) {
+    activeGalleryItem.classList.remove("is-active");
+  }
+  parentGalleryItem.classList.add("is-active");
 }
