@@ -32,6 +32,5 @@ function onGalleryContainerClick(event) {
   if (!event.target.classList.contains("gallery__image")) {
     return;
   }
-
-  console.log("Потрапили на картинку");
+  console.log(event.target.dataset.source);
 }
