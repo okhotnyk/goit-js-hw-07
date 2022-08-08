@@ -9,6 +9,10 @@ galleryContainer.insertAdjacentHTML("beforeend", markUpGalleryList);
 
 galleryContainer.addEventListener("click", onGalleryContainerClick);
 
+document.addEventListener("keydown", onEscPressed);
+
+let instance;
+
 function createItemMarkUp(items) {
   return items
     .map(({ preview, original, description }) => {
@@ -33,19 +37,24 @@ function onGalleryContainerClick(event) {
   if (!event.target.classList.contains("gallery__image")) {
     return;
   }
-  const instance = basicLightbox.create(`
-    <img src=${event.target.dataset.source} width="800" height="600">
-`);
+  instance = basicLightbox.create(
+    `<img src=${event.target.dataset.source} width="800" height="600">`,
+    {
+      onShow: (instance) => {
+        document.addEventListener("keydown", onEscPressed);
+      },
+      onClose: (instance) => {
+        document.removeEventListener("keydown", onEscPressed);
+      },
+    }
+  );
 
   instance.show();
-  // console.log(event.target.dataset.source);
-  // const parentGalleryItem = event.target.closest(".gallery__item");
-  // console.log(parentGalleryItem);
-  // const activeGalleryItem = document.querySelector(".gallery__item.is-active");
-  // if (activeGalleryItem) {
-  //   activeGalleryItem.classList.remove("is-active");
-  // }
-  // parentGalleryItem.classList.add("is-active");
 }
 
-console.log(instance);
+function onEscPressed(event) {
+  const key = event.key;
+  if (key === "Escape") {
+    instance.close();
+  }
+}
