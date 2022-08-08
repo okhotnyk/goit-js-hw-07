@@ -1,4 +1,5 @@
 import { galleryItems } from "./gallery-items.js";
+
 // Change code below this line
 
 const galleryContainer = document.querySelector(".gallery");
@@ -32,12 +33,19 @@ function onGalleryContainerClick(event) {
   if (!event.target.classList.contains("gallery__image")) {
     return;
   }
+  const instance = basicLightbox.create(`
+    <img src=${event.target.dataset.source} width="800" height="600">
+`);
+
+  instance.show();
   // console.log(event.target.dataset.source);
-  const parentGalleryItem = event.target.closest(".gallery__item");
-  console.log(parentGalleryItem);
-  const activeGalleryItem = document.querySelector(".gallery__item.is-active");
-  if (activeGalleryItem) {
-    activeGalleryItem.classList.remove("is-active");
-  }
-  parentGalleryItem.classList.add("is-active");
+  // const parentGalleryItem = event.target.closest(".gallery__item");
+  // console.log(parentGalleryItem);
+  // const activeGalleryItem = document.querySelector(".gallery__item.is-active");
+  // if (activeGalleryItem) {
+  //   activeGalleryItem.classList.remove("is-active");
+  // }
+  // parentGalleryItem.classList.add("is-active");
 }
+
+console.log(instance);
